@@ -1,25 +1,41 @@
-import logo from './logo.svg';
+import React from "react";
+import {
+    BrowserRouter,
+    Routes,
+    Route
+} from "react-router-dom";
+import HomePage from './Pages/Home/';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+    state = {
+        width: window.innerWidth,
+        height: window.innerHeight
+    }
+
+    onResize = e => {
+        this.setState({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+    }
+
+    componentDidMount() {
+        window.addEventListener('resize', this.onResize);
+    }
+
+    render() {
+        const { width, height } = this.state;
+        return (
+            <div className="app">
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<HomePage width={width} height={height} />} />
+                    </Routes>
+                </BrowserRouter>
+            </div>
+        );
+    }
 }
 
 export default App;
